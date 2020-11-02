@@ -113,7 +113,8 @@ namespace demo
                 options.SupportedCultures = supportedCutltures;
                 options.SupportedUICultures = supportedCutltures;
                 options.RequestCultureProviders = new[] {
-                       new QueryStringRequestCultureProvider {QueryStringKey = "culture", Options = options} 
+                       //new QueryStringRequestCultureProvider {QueryStringKey = "culture", Options = options}
+                       new RouteDataRequestCultureProvider { RouteDataStringKey = "language", Options = options}
                 };
             });
             /*
@@ -123,11 +124,9 @@ namespace demo
                         Options = options
                     } 
             */
-
             
-            /*
-                new RouteDataRequestCultureProvider { RouteDataStringKey = "language" } // poszukać
-            */
+                 // poszukać
+            
             
         }
 
@@ -147,15 +146,15 @@ namespace demo
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
-            app.UseRequestLocalization(options.Value);
-
             app.UseRouting();
 
             app.UseResponseCaching(); // Hubert, lukasz mrugala, patryk poblocki, Dawid Wesołowski
 
             app.UseAuthorization();     // odcinal ze wzgleud na uprawnienia
             app.UseSession();
+
+            var options = app.ApplicationServices.GetService<IOptions<RequestLocalizationOptions>>();
+            app.UseRequestLocalization(options.Value);
 
             // app.UseResponseCaching();   // Dominik Kubiaczyk, Mateusz buchajewicz
 

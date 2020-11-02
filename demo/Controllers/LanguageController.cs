@@ -2,6 +2,7 @@ using System;
 using demo.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using Microsoft.AspNetCore.Builder;
 
 namespace demo.Controllers
 {
@@ -22,8 +23,8 @@ namespace demo.Controllers
         }
 
         [HttpPost("test")]
-        public IActionResult CultureTestPost() {
-            return RedirectToAction("CultureTest");
+        public IActionResult CultureTestPost(String culture) {
+            return RedirectToAction("CultureTest", new{culture = culture});
         }
 
         [HttpGet("other-check/{language:language}")]
